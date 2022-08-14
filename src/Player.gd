@@ -23,14 +23,14 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	trying_grab = Input.is_action_pressed("grab")
-	if grabbed_object != null && !trying_grab:
+	if grabbed_object != null && Input.is_action_just_pressed("interact"):
 		emit_signal("grab_release", grabbed_object,self)
 		grabbed_object = null
 		
 	update()
 
 func _draw() -> void:
-	if trying_grab:
+	if trying_grab || grabbed_object!= null:
 		var target = get_grab_target_pos(true)
 		draw_line(to_local(position),target,Color.antiquewhite)
 
@@ -45,7 +45,7 @@ func _physics_process(_delta) ->void:
 		grab_ray.cast_to = target
 		var collision_dist:= int( position.distance_to(grab_ray.get_collision_point()))
 		grab_ray_length = collision_dist if grab_ray.is_colliding() else GRAB_DIST
-		if grab_ray.is_colliding():
+		if grab_ray.is_colliding() && Input.is_action_pressed("interact"):
 			emit_signal("grab_ray_hit", grab_ray.get_collider(), self) 
 	if grabbed_object != null:
 		apply_grab(grabbed_object)
@@ -57,11 +57,15 @@ func move(force: Vector2)-> Vector2:
 func get_grab_target_pos(for_line_draw:=false)->Vector2:
 	var pos:= to_local( position)
 	var mouse_pos:= get_local_mouse_position()
+	var to_reach_pos:= mouse_pos
 	
-	var normalized = (mouse_pos - pos).normalized()
+	if grabbed_object != null:
+		to_reach_pos = to_local(grabbed_object.position)
+	
+	var normalized = (to_reach_pos - pos).normalized()
 	if for_line_draw:
-		return pos + normalized *min(grab_ray_length, min(GRAB_DIST, pos.distance_to(mouse_pos)) )
-	return pos + normalized * min(GRAB_DIST, pos.distance_to(mouse_pos))
+		return pos + normalized *min(grab_ray_length, min(GRAB_DIST, pos.distance_to(to_reach_pos)) )
+	return pos + normalized * min(GRAB_DIST, pos.distance_to(to_reach_pos))
 
 func _on_grabbing(grabbed: RigidBody2D, grabber: RigidBody2D)->void:
 	if grabber == self:
