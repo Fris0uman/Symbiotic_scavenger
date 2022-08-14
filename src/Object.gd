@@ -6,7 +6,7 @@ var grab_force_vector:= Vector2.ZERO
 
 var contact_point: Vector2
 
-var grabber: KinematicBody2D
+var grabber: RigidBody2D
 var just_released:= false
 
 signal is_grabbed(grabbed, grabber)
@@ -22,7 +22,7 @@ func _on_grab_ray_hit(collider: Object, emitter: Object)->void:
 		grabber = emitter
 		emit_signal("is_grabbed",self,grabber)
 
-func _on_grab_release(grabbed: RigidBody2D, emitter: KinematicBody2D):
+func _on_grab_release(grabbed: RigidBody2D, emitter: RigidBody2D):
 	if grabbed == self:
 		if grabber != emitter:
 			print("Trying to release from wring grabber")

@@ -1,6 +1,6 @@
-extends KinematicBody2D
+extends RigidBody2D
 var _speed:= 40
-var move_vel: = Vector2.ZERO
+var move_force: = Vector2.ZERO
 
 var trying_grab:= false
 var grab_ray_length:= 40
@@ -36,8 +36,8 @@ func _draw() -> void:
 
 func _physics_process(_delta) ->void:
 	var direction:= Vector2(Input.get_axis("move_left","move_right"), Input.get_axis("move_up","move_down"))
-	move_vel = _speed * direction
-	move_vel = move_and_slide(move_vel)
+	move_force = _speed * direction
+	move_force = move(move_force)
 	
 	if trying_grab:
 		var target = get_grab_target_pos()
@@ -49,6 +49,10 @@ func _physics_process(_delta) ->void:
 	if grabbed_object != null:
 		pass
 
+func move(force: Vector2)-> Vector2:
+	apply_central_impulse(force)
+	return force
+
 func get_grab_target_pos(for_line_draw:=false)->Vector2:
 	var pos:= to_local( position)
 	var mouse_pos:= get_local_mouse_position()
@@ -58,6 +62,6 @@ func get_grab_target_pos(for_line_draw:=false)->Vector2:
 		return pos + normalized *min(grab_ray_length, min(GRAB_DIST, pos.distance_to(mouse_pos)) )
 	return pos + normalized * min(GRAB_DIST, pos.distance_to(mouse_pos))
 
-func _on_grabbing(grabbed: RigidBody2D, grabber: KinematicBody2D)->void:
+func _on_grabbing(grabbed: RigidBody2D, grabber: RigidBody2D)->void:
 	if grabber == self:
 		grabbed_object = grabbed
