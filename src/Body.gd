@@ -9,6 +9,7 @@ var contact_point: Vector2
 
 var just_released:= false
 
+export var _body_size:= 20
 
 func _physics_process(_delta: float) -> void:
 	if _grabber != null:
@@ -32,3 +33,6 @@ func be_released(released_by: RigidBody2D) ->void:
 		print("Trying to release from wrong grabber")
 	set_grabber(null)
 	just_released = true
+
+func get_body_size()->int:
+	return _body_size

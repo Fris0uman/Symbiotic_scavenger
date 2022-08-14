@@ -6,11 +6,12 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.5, 10 )
 
-[node name="Player" type="RigidBody2D"]
+[node name="Player" type="RigidBody2D" groups=["Actor"]]
 mode = 2
 mass = 70.0
 linear_damp = 2.0
 script = ExtResource( 2 )
+_body_size = 13
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

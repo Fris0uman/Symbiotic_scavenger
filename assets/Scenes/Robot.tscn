@@ -9,7 +9,7 @@ extents = Vector2( 6.5, 10 )
 [sub_resource type="CircleShape2D" id=2]
 radius = 150.0
 
-[node name="Robot" type="RigidBody2D"]
+[node name="Robot" type="RigidBody2D" groups=["Actor"]]
 mode = 2
 mass = 70.0
 linear_damp = 2.0
@@ -25,6 +25,7 @@ shape = SubResource( 1 )
 enabled = true
 
 [node name="Line2D" type="Line2D" parent="."]
+visible = false
 width = 2.0
 default_color = Color( 0.894118, 0.623529, 0.909804, 1 )
 

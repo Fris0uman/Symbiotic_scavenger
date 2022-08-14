@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.5, 10 )
 
-[node name="Actor" type="RigidBody2D"]
+[node name="Actor" type="RigidBody2D" groups=["Actor"]]
 mode = 2
 mass = 70.0
 linear_damp = 2.0

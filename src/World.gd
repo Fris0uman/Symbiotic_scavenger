@@ -1,12 +1,14 @@
 extends Node
 
-onready var Player:= get_node("Player")
 
 func _ready() -> void:
-	if Player != null:
-		if Player.connect("grab_ray_hit",self, "_on_grab_ray_hit") !=0: print("can't connect grab_ray_hit")
-		if Player.connect("grab_release", self, "_on_grab_release") !=0: print("can't connect grab_release")
+	connect_to_actors()
 
+func connect_to_actors() ->void:
+	var tree = get_tree()
+	for body in tree.get_nodes_in_group("Actor"):
+		if body.connect("grab_ray_hit",self, "_on_grab_ray_hit") !=0: print("can't connect grab_ray_hit")
+		if body.connect("grab_release", self, "_on_grab_release") !=0: print("can't connect grab_release")
 
 func _on_grab_ray_hit(collider: Object, emitter: Object)->void:
 	collider.set_grabber(emitter)
