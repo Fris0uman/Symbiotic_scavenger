@@ -40,8 +40,8 @@ func _physics_process(_delta: float) -> void:
 
 func apply_grab(body_to_link: RigidBody2D) -> void:
 	if body_to_link != null:
-		var pos:= to_local(position)
-		var grab_pos:= to_local(body_to_link.position)
+		var pos:= position
+		var grab_pos:= body_to_link.position
 		grab_force_vector = grab_pos - pos
 		apply_central_impulse(grab_force_vector)
 
