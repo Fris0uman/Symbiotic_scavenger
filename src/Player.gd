@@ -1,6 +1,6 @@
 extends Body
 
-var _speed:= 40
+var _speed:= 80
 var move_force: = Vector2.ZERO
 
 var trying_grab:= false
