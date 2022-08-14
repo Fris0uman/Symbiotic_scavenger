@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name Body
 
 onready var Player:= get_node("../Player")
 
@@ -29,18 +30,18 @@ func _on_grab_release(grabbed: RigidBody2D, emitter: RigidBody2D):
 		grabber = null
 		just_released = true
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if grabber != null:
-		apply_grab()
+		apply_grab(grabber)
 	elif just_released:
 		apply_central_impulse(Vector2.ZERO)
 		just_released = false
 
 
-func apply_grab() -> void:
-	if grabber != null:
+func apply_grab(body_to_link: RigidBody2D) -> void:
+	if body_to_link != null:
 		var pos:= to_local(position)
-		var grab_pos:= to_local(grabber.position)
+		var grab_pos:= to_local(body_to_link.position)
 		grab_force_vector = grab_pos - pos
 		apply_central_impulse(grab_force_vector)
 

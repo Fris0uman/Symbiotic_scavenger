@@ -1,4 +1,5 @@
-extends RigidBody2D
+extends Body
+
 var _speed:= 40
 var move_force: = Vector2.ZERO
 
@@ -47,7 +48,7 @@ func _physics_process(_delta) ->void:
 		if grab_ray.is_colliding():
 			emit_signal("grab_ray_hit", grab_ray.get_collider(), self) 
 	if grabbed_object != null:
-		pass
+		apply_grab(grabbed_object)
 
 func move(force: Vector2)-> Vector2:
 	apply_central_impulse(force)

@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "RigidBody2D",
+"class": "Body",
+"language": "GDScript",
+"path": "res://src/Body.gd"
+} ]
+_global_script_class_icons={
+"Body": ""
+}
+
 [application]
 
 config/name="Symbiotic_scavenger"
