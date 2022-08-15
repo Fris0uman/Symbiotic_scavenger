@@ -38,6 +38,7 @@ func update_ressources_in_depot()->void:
 
 #TODO: replace group check with smarter layer management
 func _on_Ressource_depot_body_entered(body: RigidBody2D) -> void:
+	#TODO: Wait for ressource to be released before counting it
 	if body.is_in_group("Ressource"):
 		#Disable collision with Actors
 		body.set_collision_layer_bit(0,false)
@@ -53,5 +54,7 @@ func make_new_bot()->void:
 	print(new_robot.position)
 	world.add_child(new_robot)
 	
-	_ressources.front().queue_free()
-	_ressources.pop_front()
+	for k in [1,2]:
+		_ressources.front().clear_all_grab()
+		_ressources.front().queue_free()
+		_ressources.pop_front()

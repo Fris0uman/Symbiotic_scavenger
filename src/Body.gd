@@ -33,6 +33,10 @@ func be_released(released_by: RigidBody2D) ->void:
 	else:
 		_grabbers.remove(index)
 
+func clear_all_grab()->void:
+	for grabber in _grabbers:
+		grabber.release_grab()
+
 func get_body_size()->int:
 	return _body_size
 
