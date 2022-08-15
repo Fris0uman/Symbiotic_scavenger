@@ -24,6 +24,7 @@ Development will probably copntinue beyond the game jam as it's not really finis
 Feedbacks and Bug reports are welcome: [Report there](https://github.com/Fris0uman/Symbiotic_scavenger/issues/new)
 
 ## What's planned:
+  - [ ] Imrpove pathfinding
   - [ ] Expand the world:
     - [ ] actual worldgen
     - [ ] day night cycle
