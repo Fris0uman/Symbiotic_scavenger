@@ -11,7 +11,7 @@ Source of the game available on github
 
 **W**,**A**,**S**,**D** to move
 
-**E** or **G** to enter grab mod > point the white vector at a thing and **Left Click**
+**E** or **G** to enter grab mod > point the white vector at a thing and **Left Click** to grab
 
 **Right Click** to release objects
 
