@@ -52,6 +52,7 @@ func make_new_bot()->void:
 	var new_robot = robot_template.instance()
 	new_robot.position = spawner.global_position
 	world.add_child(new_robot)
+	world.connect_to_actor(new_robot)
 	
 	for k in [1,2]:
 		_ressources.front().clear_all_grab()
