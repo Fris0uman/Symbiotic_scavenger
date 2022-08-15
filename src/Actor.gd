@@ -16,6 +16,10 @@ onready var grab_ray:= $RayCast2D
 signal grab_ray_hit(collider, emitter)
 signal grab_release(grabbed,grabber)
 
+func _physics_process(delta: float) -> void:
+	if _grabbed_object != null:
+		apply_grab(_grabbed_object)
+
 func confirm_grab()->void:
 	emit_signal("grab_ray_hit", grab_ray.get_collider(), self) 
 

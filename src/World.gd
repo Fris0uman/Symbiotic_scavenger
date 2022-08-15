@@ -11,7 +11,10 @@ func connect_to_actors() ->void:
 		if body.connect("grab_release", self, "_on_grab_release") !=0: print("can't connect grab_release")
 
 func _on_grab_ray_hit(collider: Object, emitter: Object)->void:
-	collider.set_grabber(emitter)
+	#if !collider.is_class("Body"):
+	#	print("%s tried to grab a non body %s" % [emitter.name, collider.name])
+	#	return
+	collider.add_grabber(emitter)
 	emitter.set_grabbed_object(collider)
 
 

@@ -7,7 +7,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	trying_grab = Input.is_action_pressed("grab")
-	if _grabbed_object != null && Input.is_action_just_pressed("interact"):
+	if _grabbed_object != null && Input.is_action_just_pressed("cancel"):
 		release_grab()
 		
 	update()
@@ -23,7 +23,6 @@ func _physics_process(_delta) ->void:
 	move_force = move(move_force)
 	
 	if trying_grab:
-		if try_grab(get_global_mouse_position()) && Input.is_action_pressed("interact"):
+		if try_grab(get_global_mouse_position()) && Input.is_action_just_pressed("interact"):
 			confirm_grab()
-	if _grabbed_object != null:
-		apply_grab(_grabbed_object)
+
