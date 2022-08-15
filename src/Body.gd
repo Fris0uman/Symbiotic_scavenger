@@ -35,3 +35,6 @@ func be_released(released_by: RigidBody2D) ->void:
 
 func get_body_size()->int:
 	return _body_size
+
+func is_grabbed()->bool:
+	return !_grabbers.empty()
