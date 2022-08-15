@@ -1,0 +1,1 @@
+Sprites in the `cdda_sprite` folder come from https://github.com/I-am-Erk/CDDA-Tilesets and are under CC BY SA license http://creativecommons.org/licenses/by-sa/3.0/
