@@ -7,6 +7,7 @@
 extents = Vector2( 5.5, 8.5 )
 
 [node name="Body" type="RigidBody2D" groups=["Ressource"]]
+z_index = 1
 mass = 40.0
 script = ExtResource( 2 )
 _body_size = 11

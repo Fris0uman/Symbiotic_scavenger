@@ -1,13 +1,11 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://assets/Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/Scenes/Body.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/World.gd" type="Script" id=3]
 [ext_resource path="res://assets/Scenes/Robot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/cdda_sprites/HollowMoon_tilesheet.png" type="Texture" id=5]
-
-[sub_resource type="ConvexPolygonShape2D" id=2]
-points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
+[ext_resource path="res://assets/Scenes/AI_core.tscn" type="PackedScene" id=6]
 
 [sub_resource type="ConvexPolygonShape2D" id=3]
 points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
@@ -54,6 +52,9 @@ points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 [sub_resource type="ConvexPolygonShape2D" id=17]
 points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 
+[sub_resource type="ConvexPolygonShape2D" id=24]
+points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
+
 [sub_resource type="NavigationPolygon" id=18]
 vertices = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
@@ -82,6 +83,9 @@ outlines = [ PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 ) ]
 [sub_resource type="ConvexPolygonShape2D" id=23]
 points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 
+[sub_resource type="ConvexPolygonShape2D" id=25]
+points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
+
 [sub_resource type="TileSet" id=1]
 0/name = "HollowMoon_tilesheet.png 0"
 0/texture = ExtResource( 5 )
@@ -97,21 +101,15 @@ points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 0/autotile/occluder_map = [  ]
 0/autotile/navpoly_map = [  ]
 0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [  ]
+0/autotile/z_index_map = [ Vector3( 0, 0, 1 ), Vector3( 0, 1, 1 ), Vector3( 0, 2, 1 ), Vector3( 0, 3, 1 ), Vector3( 1, 0, 1 ), Vector3( 1, 1, 1 ), Vector3( 1, 2, 1 ), Vector3( 1, 3, 1 ), Vector3( 2, 0, 1 ), Vector3( 2, 1, 1 ), Vector3( 2, 2, 1 ), Vector3( 2, 3, 1 ), Vector3( 3, 0, 1 ), Vector3( 3, 1, 1 ), Vector3( 3, 2, 1 ), Vector3( 3, 3, 1 ) ]
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
 0/shape_offset = Vector2( 0, 0 )
 0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape = SubResource( 2 )
+0/shape = SubResource( 3 )
 0/shape_one_way = false
 0/shape_one_way_margin = 1.0
 0/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 2 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
 "autotile_coord": Vector2( 1, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
@@ -201,6 +199,12 @@ points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 "one_way_margin": 1.0,
 "shape": SubResource( 17 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 24 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 0/z_index = 0
 1/name = "HollowMoon_tilesheet.png 1"
@@ -247,6 +251,36 @@ points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 2/z_index = 0
+3/name = "HollowMoon_tilesheet.png 3"
+3/texture = ExtResource( 5 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 0, 48, 24, 24 )
+3/tile_mode = 1
+3/autotile/bitmask_mode = 0
+3/autotile/bitmask_flags = [  ]
+3/autotile/icon_coordinate = Vector2( 0, 0 )
+3/autotile/tile_size = Vector2( 24, 24 )
+3/autotile/spacing = 0
+3/autotile/occluder_map = [  ]
+3/autotile/navpoly_map = [  ]
+3/autotile/priority_map = [  ]
+3/autotile/z_index_map = [ Vector3( 0, 0, 1 ) ]
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape = SubResource( 25 )
+3/shape_one_way = false
+3/shape_one_way_margin = 1.0
+3/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 25 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+3/z_index = 0
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
@@ -268,3 +302,6 @@ position = Vector2( 349, 285 )
 
 [node name="Robot" parent="." instance=ExtResource( 4 )]
 position = Vector2( 386, 378 )
+
+[node name="AI_core" parent="." instance=ExtResource( 6 )]
+position = Vector2( 568, 552 )

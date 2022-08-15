@@ -4,7 +4,7 @@ var _current_path: PoolVector2Array
 
 var grab_target: Vector2
 
-var ORIGIN:= Vector2(512,576)
+var _home_depot: Vector2
 
 onready var Nav:= get_node("../Navigation2D")
 onready var line:= $Line2D
@@ -13,6 +13,9 @@ onready var collision_shape:= $CollisionShape2D
 
 func _ready() -> void:
 	set_process(true)
+	
+	var AI_core = get_tree().get_nodes_in_group("Core")[0]
+	_home_depot = AI_core.get_child(2).global_position
 
 func _draw() -> void:
 	if trying_grab || _grabbed_object!= null:
@@ -29,13 +32,19 @@ func _process(delta: float) -> void:
 			trying_grab = true
 			if try_grab(grab_target):
 				confirm_grab()
-				clear_path()
+				new_path()
 	else:
 		trying_grab = false
 		grab_target= position
 	
+	if is_carrying():
+		if close_enough(_home_depot):
+			release_grab()
+			new_path()
+	
+	
 	if _current_path.empty():
-		_current_path = make_path(pick_destination())
+		new_path()
 	var direction:= (_current_path[0] - position).normalized()
 	move_force = _speed * direction
 	move_force = move(move_force)
@@ -47,8 +56,11 @@ func _process(delta: float) -> void:
 	
 	update()
 
-func clear_path()->void:
-	_current_path = PoolVector2Array()
+func set_path_to(dest: Vector2)->void:
+	_current_path = make_path(dest)
+
+func new_path()->void:
+	_current_path = make_path(pick_destination())
 
 func make_path(destination: Vector2)->PoolVector2Array:
 	var path= Nav.get_simple_path(position,destination,false)
@@ -72,10 +84,10 @@ func pick_destination()->Vector2:
 		if closest_body != null:
 			return closest_body.position
 		else:
-			var home_direction:= (ORIGIN - position).normalized()
+			var home_direction:= (_home_depot - position).normalized()
 			dest = position - home_direction*40
 	else:
-		dest = ORIGIN
+		dest = _home_depot
 	
 	
 	return dest

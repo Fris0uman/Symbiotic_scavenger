@@ -10,6 +10,7 @@ extents = Vector2( 6.5, 10 )
 radius = 150.0
 
 [node name="Robot" type="RigidBody2D" groups=["Actor"]]
+z_index = 1
 mode = 2
 mass = 70.0
 linear_damp = 2.0
@@ -25,11 +26,10 @@ shape = SubResource( 1 )
 enabled = true
 
 [node name="Line2D" type="Line2D" parent="."]
-visible = false
 width = 2.0
 default_color = Color( 0.894118, 0.623529, 0.909804, 1 )
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["Depot"]]
 modulate = Color( 0.796078, 0.913725, 0.219608, 1 )
 show_behind_parent = true
 monitorable = false
