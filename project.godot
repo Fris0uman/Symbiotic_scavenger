@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Symbiotic_scavenger"
-run/main_scene="res://assets/Scenes/World.tscn"
+run/main_scene="res://assets/Scenes/Main_menu.tscn"
 config/icon="res://icon.png"
 
 [global]
