@@ -34,7 +34,7 @@ Feedbacks and Bug reports are welcome: [Report there](https://github.com/Fris0um
     - [ ] Variety of robots
     - [ ] Road building
 - [ ] ?? if the rest gets done add survival elements
-# Credit
+# Credits
 
 All sprites come from the [Hollow Moon](https://github.com/I-am-Erk/CDDA-Tilesets/tree/master/gfx/HollowMoon) Tileset initially designed for [Cataclysm: Dark Days Ahead](https://github.com/CleverRaven/Cataclysm-DDA)
 
