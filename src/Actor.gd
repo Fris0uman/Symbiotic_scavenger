@@ -16,7 +16,7 @@ onready var grab_ray:= $RayCast2D
 signal grab_ray_hit(collider, emitter)
 signal grab_release(grabbed,grabber)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if _grabbed_object != null:
 		apply_grab(_grabbed_object)
 

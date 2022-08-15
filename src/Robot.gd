@@ -11,6 +11,8 @@ onready var Nav:= get_node("../Navigation2D")
 onready var line:= $Line2D
 onready var awarness_area:= $Area2D
 onready var collision_shape:= $CollisionShape2D
+#TODO: figure out navigation agent
+#onready var nav_agent:= $NavigationAgent2D
 
 func _ready() -> void:
 	set_process(true)
@@ -66,6 +68,8 @@ func new_path()->void:
 
 func make_path(destination: Vector2)->PoolVector2Array:
 	var path= Nav.get_simple_path(position,destination,false)
+	#TODO: figure out navigation agent
+	#var path = Navigation2DServer.map_get_path(nav_agent.get_navigation_map() ,position,destination, false)
 	line.points = path
 	return path
 
