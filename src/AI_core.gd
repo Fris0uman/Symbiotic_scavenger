@@ -51,10 +51,10 @@ func _on_Ressource_depot_body_entered(body: RigidBody2D) -> void:
 func make_new_bot()->void:
 	var new_robot = robot_template.instance()
 	new_robot.position = spawner.global_position
-	print(new_robot.position)
 	world.add_child(new_robot)
 	
 	for k in [1,2]:
 		_ressources.front().clear_all_grab()
 		_ressources.front().queue_free()
 		_ressources.pop_front()
+		world.total_ressources -=1

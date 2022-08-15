@@ -285,6 +285,7 @@ points = PoolVector2Array( 0, 0, 24, 0, 24, 24, 0, 24 )
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
+ressource_template = ExtResource( 2 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
@@ -298,24 +299,18 @@ tile_data = PoolIntArray( -7864436, 1073741824, 65537, -7864435, 1073741824, 2, 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 680, 456 )
 
-[node name="Object" parent="." instance=ExtResource( 2 )]
-position = Vector2( 344, 288 )
-
-[node name="Body" parent="." instance=ExtResource( 2 )]
-position = Vector2( 312, 456 )
-
 [node name="Robot" parent="." instance=ExtResource( 4 )]
 position = Vector2( 386, 378 )
 
 [node name="AI_core" parent="." instance=ExtResource( 6 )]
 position = Vector2( 568, 552 )
 
-[node name="Body2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 664, 480 )
-
-[node name="Body3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 688, 480 )
-
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 7 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
