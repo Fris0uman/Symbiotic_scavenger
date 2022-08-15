@@ -4,7 +4,8 @@ var _current_path: PoolVector2Array
 
 var grab_target: Vector2
 
-var _home_depot: Vector2
+var _home_depot_pos: Vector2
+var _home_depot_area: Area2D
 
 onready var Nav:= get_node("../Navigation2D")
 onready var line:= $Line2D
@@ -15,14 +16,15 @@ func _ready() -> void:
 	set_process(true)
 	
 	var AI_core = get_tree().get_nodes_in_group("Core")[0]
-	_home_depot = AI_core.get_child(2).global_position
+	_home_depot_area = AI_core.get_child(2)
+	_home_depot_pos = _home_depot_area.global_position
 
 func _draw() -> void:
 	if trying_grab || _grabbed_object!= null:
 		var target = get_grab_target_pos(grab_target, true)
 		draw_line(to_local(position),target,Color.antiquewhite)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	line.global_position = Vector2.ZERO
 	
 	var closest_ressource = get_closest_ressource_in_awarness()
@@ -38,7 +40,7 @@ func _process(delta: float) -> void:
 		grab_target= position
 	
 	if is_carrying():
-		if close_enough(_home_depot):
+		if close_enough(_home_depot_pos):
 			release_grab()
 			new_path()
 	
@@ -69,7 +71,7 @@ func make_path(destination: Vector2)->PoolVector2Array:
 
 func close_enough(vect: Vector2, bod = null)->bool:
 	if bod == null:
-		return position.distance_to(vect)<=_body_size/2
+		return position.distance_to(vect)<=_body_size/2.0
 	else:
 		var bod_size= bod.get_body_size()
 		var dist:= position.distance_to(vect)
@@ -84,10 +86,10 @@ func pick_destination()->Vector2:
 		if closest_body != null:
 			return closest_body.position
 		else:
-			var home_direction:= (_home_depot - position).normalized()
+			var home_direction:= (_home_depot_pos - position).normalized()
 			dest = position - home_direction*40
 	else:
-		dest = _home_depot
+		dest = _home_depot_pos
 	
 	
 	return dest
@@ -95,6 +97,7 @@ func pick_destination()->Vector2:
 func get_closest_ressource_in_awarness()->Body:
 	var closest_body: Body
 	for body in awarness_area.get_overlapping_bodies():
+		if !_home_depot_area.overlaps_body(body):
 			if body.is_in_group("Ressource"):
 				closest_body= body
 	return closest_body
