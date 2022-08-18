@@ -9,26 +9,34 @@ var _home_depot_area: Area2D
 
 onready var Nav:= get_node("../Navigation2D")
 onready var line:= $Line2D
+onready var line2:= $Line2D2
 onready var awarness_area:= $Area2D
 onready var collision_shape:= $CollisionShape2D
-#TODO: figure out navigation agent
-#onready var nav_agent:= $NavigationAgent2D
+onready var nav_agent:= $NavigationAgent2D
+
+onready var map := get_node("../TileMap")
 
 func _ready() -> void:
+	nav_agent.connect("velocity_computed", self, "agent_velocity_computed")
 	set_process(true)
 	
 	var AI_core = get_tree().get_nodes_in_group("Core")[0]
 	_home_depot_area = AI_core.get_child(2)
 	_home_depot_pos = _home_depot_area.global_position
+	
+	new_path()
 
 func _draw() -> void:
 	if trying_grab || _grabbed_object!= null:
 		var target = get_grab_target_pos(grab_target, true)
 		draw_line(to_local(position),target,Color.antiquewhite)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	line.global_position = Vector2.ZERO
-	
+	line2.global_position = Vector2.ZERO
+	update()
+
+func _physics_process(_delta: float) -> void:
 	var closest_ressource = get_closest_ressource_in_awarness()
 	if closest_ressource!= null && !is_carrying():
 		grab_target = closest_ressource.position
@@ -47,29 +55,32 @@ func _process(_delta: float) -> void:
 			new_path()
 	
 	
-	if _current_path.empty():
+	if nav_agent.is_target_reached():
 		new_path()
-	var direction:= (_current_path[0] - position).normalized()
-	move_force = _speed * direction
-	move_force = move(move_force)
 	
+	var next_location= nav_agent.get_next_location()
+	line2.add_point(next_location)
+	var direction:= position.direction_to(next_location)
+	#move_force = _speed * direction
+	#move_force = move(move_force)
 	
-	if close_enough(_current_path[0]):
-		_current_path.remove(0)
-		line.remove_point(0)
+	var target_vel:= direction * _speed
+	nav_agent.set_velocity(target_vel)
 	
-	update()
+	if close_enough(next_location):
+		line2.remove_point(0)
 
-func set_path_to(dest: Vector2)->void:
-	_current_path = make_path(dest)
+
+func agent_velocity_computed(calculated_velocity : Vector2):
+	move(calculated_velocity)
 
 func new_path()->void:
-	_current_path = make_path(pick_destination())
+	make_path(pick_destination())
 
 func make_path(destination: Vector2)->PoolVector2Array:
-	var path= Nav.get_simple_path(position,destination,false)
-	#TODO: figure out navigation agent
-	#var path = Navigation2DServer.map_get_path(nav_agent.get_navigation_map() ,position,destination, false)
+	#var path= Nav.get_simple_path(position,destination,false)
+	nav_agent.set_target_location(destination)
+	var path = Navigation2DServer.map_get_path(nav_agent.get_navigation_map() ,position,destination, false)
 	line.points = path
 	return path
 
@@ -90,8 +101,12 @@ func pick_destination()->Vector2:
 		if closest_body != null:
 			return closest_body.position
 		else:
-			var home_direction:= (_home_depot_pos - position).normalized()
-			dest = position - home_direction*40
+			var cell_index:= -1
+			while cell_index != 1:
+				var rand_angle:= rand_range(PI, 2*PI/3)
+				var rand_vector:= Vector2(cos(rand_angle),sin(rand_angle))
+				dest = position.direction_to(rand_vector)
+				cell_index = map.get_cellv(map.world_to_map(dest))
 	else:
 		dest = _home_depot_pos
 	

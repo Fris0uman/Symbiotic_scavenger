@@ -8,7 +8,7 @@ onready var depot:= $Ressource_depot
 onready var spawner:= $Spawner
 
 onready var world:= get_parent()
-onready var map:= get_node("../Navigation2D/TileMap")
+onready var map:= get_node("../TileMap")
 
 func _ready() -> void:
 	place_depot()
