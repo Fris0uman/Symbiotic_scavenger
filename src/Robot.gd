@@ -7,22 +7,26 @@ var grab_target: Vector2
 var _home_depot_pos: Vector2
 var _home_depot_area: Area2D
 
-onready var Nav:= get_node("../Navigation2D")
+var _last_pos: Vector2
+var _stuck_counter:= 0.0
+
 onready var line:= $Line2D
-onready var line2:= $Line2D2
 onready var awarness_area:= $Area2D
 onready var collision_shape:= $CollisionShape2D
 onready var nav_agent:= $NavigationAgent2D
 
 onready var map := get_node("../TileMap")
 
+var STUCK_THRESHOLD:= 0.4
+
 func _ready() -> void:
-	nav_agent.connect("velocity_computed", self, "agent_velocity_computed")
 	set_process(true)
 	
 	var AI_core = get_tree().get_nodes_in_group("Core")[0]
 	_home_depot_area = AI_core.get_child(2)
 	_home_depot_pos = _home_depot_area.global_position
+	
+	_last_pos = position
 	
 	new_path()
 
@@ -31,9 +35,8 @@ func _draw() -> void:
 		var target = get_grab_target_pos(grab_target, true)
 		draw_line(to_local(position),target,Color.antiquewhite)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	line.global_position = Vector2.ZERO
-	line2.global_position = Vector2.ZERO
 	update()
 
 func _physics_process(_delta: float) -> void:
@@ -55,34 +58,38 @@ func _physics_process(_delta: float) -> void:
 			new_path()
 	
 	
-	if nav_agent.is_target_reached():
+	if _current_path.empty():
 		new_path()
 	
-	var next_location= nav_agent.get_next_location()
-	line2.add_point(next_location)
+	if position.distance_to(_last_pos)<= 0.2:
+		_stuck_counter += _delta
+	else:
+		_stuck_counter = 0.0
+
+	_last_pos = position	
+	
+	
+	var next_location= _current_path[0]
 	var direction:= position.direction_to(next_location)
-	#move_force = _speed * direction
-	#move_force = move(move_force)
-	
 	var target_vel:= direction * _speed
-	nav_agent.set_velocity(target_vel)
+	move(target_vel)
+
+	if _stuck_counter > STUCK_THRESHOLD:
+		print("Help I'm stuck!")
 	
+
 	if close_enough(next_location):
-		line2.remove_point(0)
-
-
-func agent_velocity_computed(calculated_velocity : Vector2):
-	move(calculated_velocity)
+		_current_path.remove(0)
+		line.remove_point(0)
 
 func new_path()->void:
-	make_path(pick_destination())
+	_current_path = make_path(pick_destination())
 
 func make_path(destination: Vector2)->PoolVector2Array:
-	#var path= Nav.get_simple_path(position,destination,false)
-	nav_agent.set_target_location(destination)
 	var path = Navigation2DServer.map_get_path(nav_agent.get_navigation_map() ,position,destination, false)
 	line.points = path
 	return path
+
 
 func close_enough(vect: Vector2, bod = null)->bool:
 	if bod == null:
@@ -109,7 +116,6 @@ func pick_destination()->Vector2:
 				cell_index = map.get_cellv(map.world_to_map(dest))
 	else:
 		dest = _home_depot_pos
-	
 	
 	return dest
 

@@ -15,7 +15,7 @@ onready var timer:= $Timer
 
 func _ready() -> void:
 	connect_to_actors()
-	for k in range(0,1000):
+	for _k in range(0,1000):
 		_add_ressource()
 
 func connect_to_actors() ->void:
