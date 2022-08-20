@@ -10,6 +10,9 @@ var _home_depot_area: Area2D
 
 var _last_pos: Vector2
 var _stuck_counter:= 0.0
+var _heading: float
+
+export var _step_size:= 40
 
 onready var line:= $Line2D
 onready var awarness_area:= $Area2D
@@ -28,8 +31,8 @@ func _ready() -> void:
 	_home_depot_area = AI_core.get_child(2)
 	_home_depot_pos = _home_depot_area.global_position
 	
-	_last_pos = position
-	
+	_last_pos = global_position
+	pick_heading()
 	new_path()
 
 func _draw() -> void:
@@ -57,6 +60,7 @@ func _physics_process(_delta: float) -> void:
 	if is_carrying():
 		if close_enough(_home_depot_pos):
 			release_grab()
+			pick_heading()
 			new_path()
 	
 	
@@ -68,7 +72,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		_stuck_counter = 0.0
 
-	_last_pos = position	
+	_last_pos = global_position	
 	
 	
 	var next_location= _current_path[0]
@@ -76,12 +80,16 @@ func _physics_process(_delta: float) -> void:
 	var target_vel:= direction * _speed
 	move(target_vel)
 
+	#TODO: unstuck
 	if _stuck_counter > STUCK_THRESHOLD:
 		pass
 
 	if close_enough(next_location):
 		_current_path.remove(0)
 		line.remove_point(0)
+
+func pick_heading():
+	_heading = rand_range(0,2*PI)
 
 func new_path()->void:
 	_curr_dest = pick_destination()
@@ -112,9 +120,9 @@ func pick_destination()->Vector2:
 		else:
 			var cell_index:= -1
 			while cell_index != 1:
-				var rand_angle:= rand_range(PI, 2*PI/3)
+				var rand_angle:= rand_range(_heading-PI/3, _heading+ PI/3)
 				var rand_vector:= Vector2(cos(rand_angle),sin(rand_angle))
-				dest = position + rand_vector * 20
+				dest = global_position + rand_vector * _step_size
 				cell_index = map.get_cellv(map.world_to_map(dest))
 	else:
 		dest = _home_depot_pos
@@ -140,4 +148,3 @@ func _on_Collision_avoidance_area_entered(area: Area2D) -> void:
 func _on_Collision_avoidance_area_exited(area: Area2D) -> void:
 	_current_path = make_path(_curr_dest)
 	line.points = _current_path
-	pass # Replace with function body.
