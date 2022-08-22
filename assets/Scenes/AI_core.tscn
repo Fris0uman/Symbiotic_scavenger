@@ -29,6 +29,8 @@ disabled = true
 
 [node name="Ressource_depot" type="Area2D" parent="."]
 position = Vector2( 72, 0 )
+collision_layer = 0
+collision_mask = 2
 
 [node name="Sprite" type="Sprite" parent="Ressource_depot"]
 texture = ExtResource( 2 )

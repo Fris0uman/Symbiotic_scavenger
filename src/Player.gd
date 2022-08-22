@@ -26,3 +26,5 @@ func _physics_process(_delta) ->void:
 		if try_grab(get_global_mouse_position()) && Input.is_action_just_pressed("interact"):
 			confirm_grab()
 
+func is_robot()->bool:
+	return false

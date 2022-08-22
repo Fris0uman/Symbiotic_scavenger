@@ -148,3 +148,6 @@ func _on_Collision_avoidance_area_entered(area: Area2D) -> void:
 func _on_Collision_avoidance_area_exited(area: Area2D) -> void:
 	_current_path = make_path(_curr_dest)
 	line.points = _current_path
+
+func is_robot()->bool:
+	return true

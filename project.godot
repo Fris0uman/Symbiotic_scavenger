@@ -92,6 +92,12 @@ Exit={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Collision"
+2d_physics/layer_2="Ressource"
+2d_physics/layer_4="Collision avoidance"
+
 [physics]
 
 common/enable_pause_aware_picking=true

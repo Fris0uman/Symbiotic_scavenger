@@ -36,17 +36,20 @@ func update_ressources_in_depot()->void:
 			_ressources.append(body)
 
 
-#TODO: replace group check with smarter layer management
 func _on_Ressource_depot_body_entered(body: RigidBody2D) -> void:
-	#TODO: Wait for ressource to be released before counting it
-	if body.is_in_group("Ressource"):
-		#Disable collision with Actors
-		body.set_collision_layer_bit(0,false)
-		body.set_collision_mask_bit(0,false)
-		
-		body.set_modulate(Color.dimgray)
-		
-		_ressources.append(body)
+	#Make robot release the ressource and go back fetching more
+	for actor in body.get_grabbers():
+		if actor.is_robot():
+			actor.release_grab()
+			actor.new_path()
+	
+	#Disable collision with Actors
+	body.set_collision_layer_bit(0,false)
+	body.set_collision_mask_bit(0,false)
+	
+	body.set_modulate(Color.dimgray)
+	
+	_ressources.append(body)
 
 func make_new_bot()->void:
 	var new_robot = robot_template.instance()
