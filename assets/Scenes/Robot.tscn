@@ -14,6 +14,7 @@ radius = 150.0
 
 [node name="Robot" type="RigidBody2D" groups=["Actor"]]
 z_index = 1
+collision_layer = 5
 mode = 2
 mass = 70.0
 linear_damp = 2.0
@@ -27,6 +28,7 @@ shape = SubResource( 3 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
+collision_mask = 4
 
 [node name="Line2D" type="Line2D" parent="."]
 width = 2.0
@@ -51,4 +53,3 @@ shape = SubResource( 2 )
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [connection signal="area_entered" from="Collision_avoidance" to="." method="_on_Collision_avoidance_area_entered"]
-[connection signal="area_shape_entered" from="Collision_avoidance" to="." method="_on_Collision_avoidance_area_shape_entered"]

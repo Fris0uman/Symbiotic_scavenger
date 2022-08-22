@@ -9,7 +9,7 @@ height = 6.0
 
 [node name="Body" type="RigidBody2D" groups=["Ressource"]]
 z_index = 1
-collision_layer = 3
+collision_layer = 7
 mass = 40.0
 script = ExtResource( 2 )
 _body_size = 11

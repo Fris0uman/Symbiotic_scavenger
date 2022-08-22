@@ -32,6 +32,7 @@ func connect_to_actor(body: Actor)->void:
 func _on_grab_ray_hit(collider: Object, emitter: Object)->void:
 	if !collider.is_class("RigidBody2D"):
 		print("%s tried to grab a non body %s" % [emitter.name, collider.name])
+		print("Check that collision layers are correct, layer 3 is for grabbing only")
 		return
 	collider.add_grabber(emitter)
 	emitter.set_grabbed_object(collider)
