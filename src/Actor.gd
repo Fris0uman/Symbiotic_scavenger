@@ -27,9 +27,8 @@ func release_grab()->void:
 		emit_signal("grab_release", _grabbed_object,self)
 		_grabbed_object = null
 
-func move(force: Vector2)-> Vector2:
+func move(force: Vector2)-> void:
 	apply_central_impulse(force)
-	return force
 
 func get_grab_target_pos(pos_to_try: Vector2,for_line_draw:=false)->Vector2:
 	var pos:= to_local( position)

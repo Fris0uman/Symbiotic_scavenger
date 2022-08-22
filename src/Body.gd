@@ -42,3 +42,6 @@ func get_body_size()->int:
 
 func is_grabbed()->bool:
 	return !_grabbers.empty()
+
+func get_grabbers()->Array:
+	return _grabbers

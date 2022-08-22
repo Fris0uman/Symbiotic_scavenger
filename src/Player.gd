@@ -20,9 +20,11 @@ func _draw() -> void:
 func _physics_process(_delta) ->void:
 	var direction:= Vector2(Input.get_axis("move_left","move_right"), Input.get_axis("move_up","move_down"))
 	move_force = _speed * direction
-	move_force = move(move_force)
+	move(move_force)
 	
 	if trying_grab:
 		if try_grab(get_global_mouse_position()) && Input.is_action_just_pressed("interact"):
 			confirm_grab()
 
+func is_robot()->bool:
+	return false

@@ -15,7 +15,7 @@ onready var timer:= $Timer
 
 func _ready() -> void:
 	connect_to_actors()
-	for k in range(0,1000):
+	for _k in range(0,1000):
 		_add_ressource()
 
 func connect_to_actors() ->void:
@@ -30,9 +30,10 @@ func connect_to_actor(body: Actor)->void:
 
 
 func _on_grab_ray_hit(collider: Object, emitter: Object)->void:
-	#if !collider.is_class("Body"):
-	#	print("%s tried to grab a non body %s" % [emitter.name, collider.name])
-	#	return
+	if !collider.is_class("RigidBody2D"):
+		print("%s tried to grab a non body %s" % [emitter.name, collider.name])
+		print("Check that collision layers are correct, layer 3 is for grabbing only")
+		return
 	collider.add_grabber(emitter)
 	emitter.set_grabbed_object(collider)
 
