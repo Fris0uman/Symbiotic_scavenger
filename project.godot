@@ -99,6 +99,12 @@ Exit={
 2d_physics/layer_3="Grab layer"
 2d_physics/layer_4="Collision avoidance"
 
+[navigation]
+
+2d/default_cell_size=24.0
+2d/default_cell_height=24.0
+2d/default_edge_connection_margin=12.0
+
 [physics]
 
 common/enable_pause_aware_picking=true
