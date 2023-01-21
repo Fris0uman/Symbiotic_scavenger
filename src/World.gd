@@ -9,7 +9,8 @@ var MAX_Y: = 3584.0
 var MIN_X: = -2752.0
 var MAX_X: = 6400.0
 
-export var ressource_template: PackedScene
+export var ressource_fuel: PackedScene
+export var ressource_scrap: PackedScene
 
 onready var timer:= $Timer
 
@@ -42,7 +43,13 @@ func _on_grab_release(grabbed: RigidBody2D, emitter: RigidBody2D):
 	grabbed.be_released(emitter)
 
 func _add_ressource()-> void:
-	var new_ressource = ressource_template.instance()
+	var coin_flip := randi() % 2 + 1
+	var new_ressource: Body
+	if coin_flip > 1:
+		new_ressource = ressource_fuel.instance()
+	else:
+		new_ressource = ressource_scrap.instance()
+		
 	var rand_x = rand_range(MIN_X,MAX_X)
 	var rand_Y = rand_range(MIN_Y,MAX_Y)
 	new_ressource.position =  Vector2(rand_x,rand_Y)

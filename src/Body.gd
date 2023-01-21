@@ -8,6 +8,7 @@ var grab_force_vector:= Vector2.ZERO
 var contact_point: Vector2
 
 export var _body_size:= 20
+export var _flags: Array
 
 func _physics_process(_delta: float) -> void:
 	apply_all_grabs()
@@ -45,3 +46,6 @@ func is_grabbed()->bool:
 
 func get_grabbers()->Array:
 	return _grabbers
+
+func has_flag(flag: String)->bool:
+	return _flags.has(flag)
