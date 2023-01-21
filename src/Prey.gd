@@ -56,7 +56,7 @@ func pick_fleeing_heading()->void:
 	var chaser_vector:= Vector2.ZERO
 	for body in _bodies_fleeing_from:
 		chaser_vector += position.direction_to(body.position)
-	_heading = acos( - chaser_vector.x )
+	_heading = acos( - chaser_vector.normalized().x )
 
 func new_path()->void:
 	pick_fleeing_heading()

@@ -11,6 +11,7 @@ var MAX_X: = 6400.0
 
 export var ressource_fuel: PackedScene
 export var ressource_scrap: PackedScene
+export var ressource_live_scrap: PackedScene
 
 onready var timer:= $Timer
 
@@ -48,7 +49,11 @@ func _add_ressource()-> void:
 	if coin_flip > 1:
 		new_ressource = ressource_fuel.instance()
 	else:
-		new_ressource = ressource_scrap.instance()
+		coin_flip = randi() % 2 + 1
+		if coin_flip > 1:
+			new_ressource = ressource_scrap.instance()
+		else:
+			new_ressource = ressource_live_scrap.instance()
 		
 	var rand_x = rand_range(MIN_X,MAX_X)
 	var rand_Y = rand_range(MIN_Y,MAX_Y)

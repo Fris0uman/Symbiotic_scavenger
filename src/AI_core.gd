@@ -48,6 +48,11 @@ func _on_Ressource_depot_body_entered(body: RigidBody2D) -> void:
 			actor.release_grab()
 			actor.new_path()
 	
+	# Turn off Preys
+	if body.is_in_group("Prey"):
+		body.set_process(false)
+		body.set_physics_process(false)
+	
 	#Disable collision with Actors
 	body.set_collision_layer_bit(0,false)
 	body.set_collision_mask_bit(0,false)

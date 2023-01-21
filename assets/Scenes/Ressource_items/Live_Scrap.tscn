@@ -10,13 +10,14 @@ height = 4.0
 [sub_resource type="CircleShape2D" id=2]
 radius = 51.0098
 
-[node name="Prey" type="RigidBody2D" groups=["Ressource"]]
+[node name="Prey" type="RigidBody2D" groups=["Prey", "Ressource"]]
 z_index = 1
-collision_layer = 5
+collision_layer = 7
 mode = 2
 mass = 70.0
 linear_damp = 2.0
 script = ExtResource( 1 )
+_flags = [ "Scrap" ]
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
