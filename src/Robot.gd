@@ -118,7 +118,7 @@ func pick_destination()->Vector2:
 func get_closest_ressource_in_awarness()->Body:
 	var closest_body: Body
 	for body in awarness_area.get_overlapping_bodies():
-		if !_home_depot_area.overlaps_body(body) && !body.is_grabbed():
+		if !_home_depot_area.overlaps_body(body) && ( !body.is_grabbed() || body.is_in_group("Prey")):
 			if body.is_in_group("Ressource"):
 				closest_body= body
 	return closest_body

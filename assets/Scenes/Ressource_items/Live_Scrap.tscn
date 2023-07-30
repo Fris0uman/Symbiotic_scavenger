@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Prey.gd" type="Script" id=1]
+[ext_resource path="res://assets/cdda_sprites/e_scrap_season_winter.png" type="Texture" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 5.0
+height = 4.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 51.0098
+
+[node name="Prey" type="RigidBody2D" groups=["Prey", "Ressource"]]
+z_index = 1
+collision_layer = 7
+mode = 2
+mass = 70.0
+linear_damp = 2.0
+script = ExtResource( 1 )
+_flags = [ "Scrap" ]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 1 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+collision_mask = 4
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="AwarnessShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -1, 1 )
+shape = SubResource( 2 )
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+radius = 12.0
+neighbor_dist = 32.0
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
